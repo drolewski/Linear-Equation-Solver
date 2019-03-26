@@ -54,6 +54,9 @@ public class Matrix {
 
 //    matrices multiplication with vector parameter
 //    this method multiple vector and this class field matrix
+//    We dont have to worry about different vectors as Nx1,
+//    because in Systems of Linear Equations vector X and produce
+//    has only one column
     public double[][] multipleMatrix(double[][] tmpVector){
         double[][] resultMatrix = new double[this.matrixSize][1];
 
