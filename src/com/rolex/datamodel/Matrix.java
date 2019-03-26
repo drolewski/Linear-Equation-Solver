@@ -20,8 +20,8 @@ public class Matrix {
         return matrix;
     }
 
-    //Return transposed matrix
-    public double[][] transposeMatrix(){
+//    Transpose matrix stored in the matrix field
+    public void transposeMatrix(){
         double[][] matrixTransposed = new double[this.matrixSize][this.matrixSize];
 
         for(int i = 0; i < this.matrixSize; i++){
@@ -29,10 +29,10 @@ public class Matrix {
                 matrixTransposed[i][j] = this.matrix[j][i];
             }
         }
-        return matrixTransposed;
+        this.matrix = matrixTransposed;
     }
 
-    //Temporary method to create matrix
+//    Temporary method to create matrix
     public void createMatrix(ArrayList<Double> listOfElements){
         int vectorPointer=0;
         for(int i = 0; i < this.matrixSize; i++){
@@ -52,21 +52,19 @@ public class Matrix {
         }
     }
 
-    //matrices multiplication temporary method
-    public double[][] multipleMatrix(){
-        double[][] tmpVector = new double[][]{
-            {1.0},
-            {2.0},
-            {3.0},
-            {4.0}
-        };
-        double[][] resultMatrix = new double[this.matrixSize][this.matrixSize];
+//    matrices multiplication with vector parameter
+//    this method multiple vector and this class field matrix
+    public double[][] multipleMatrix(double[][] tmpVector){
+        double[][] resultMatrix = new double[this.matrixSize][1];
 
         if(this.matrixSize == tmpVector.length){
             for (int i = 0; i < this.matrixSize ; i++){
+
                 double tempValue = 0;
                 for (int j = 0; j < this.matrixSize; j++){
+
                     tempValue += tmpVector[j][0]*this.matrix[i][j];
+
                     if(j == this.matrixSize - 1){
                         resultMatrix[i][0] = tempValue;
                     }
@@ -76,6 +74,7 @@ public class Matrix {
         }else{
             System.out.println("Dimensions of matrices aren't compatible.");
         }
+
         return resultMatrix;
     }
 }
