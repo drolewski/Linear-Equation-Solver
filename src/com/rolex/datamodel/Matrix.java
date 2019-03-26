@@ -51,4 +51,31 @@ public class Matrix {
             System.out.println("\n");
         }
     }
+
+    //matrices multiplication temporary method
+    public double[][] multipleMatrix(){
+        double[][] tmpVector = new double[][]{
+            {1.0},
+            {2.0},
+            {3.0},
+            {4.0}
+        };
+        double[][] resultMatrix = new double[this.matrixSize][this.matrixSize];
+
+        if(this.matrixSize == tmpVector.length){
+            for (int i = 0; i < this.matrixSize ; i++){
+                double tempValue = 0;
+                for (int j = 0; j < this.matrixSize; j++){
+                    tempValue += tmpVector[j][0]*this.matrix[i][j];
+                    if(j == this.matrixSize - 1){
+                        resultMatrix[i][0] = tempValue;
+                    }
+                }
+
+            }
+        }else{
+            System.out.println("Dimensions of matrices aren't compatible.");
+        }
+        return resultMatrix;
+    }
 }
