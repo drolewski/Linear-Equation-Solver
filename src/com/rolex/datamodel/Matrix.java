@@ -25,6 +25,10 @@ public class Matrix {
         return matrix;
     }
 
+    public double[][] getUnitMatrix(){
+        return unitMatrix;
+    }
+
 //    Transpose matrix stored in the matrix field
     public void transposeMatrix(){
         double[][] matrixTransposed = new double[this.matrixSize][this.matrixSize];
