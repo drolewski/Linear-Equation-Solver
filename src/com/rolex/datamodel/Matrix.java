@@ -6,10 +6,15 @@ public class Matrix {
 
     private int matrixSize;
     private double[][] matrix;
+    private double[][] unitMatrix;
 
     public Matrix(int matrixSize) {
         this.matrixSize = matrixSize;
         this.matrix = new double[matrixSize][matrixSize];
+        this.unitMatrix = new double[matrixSize][matrixSize];
+        for(int i = 0; i < matrixSize; i++){
+            this.unitMatrix[i][i] = 1;
+        }
     }
 
     public int getMatrixSize() {
@@ -117,6 +122,63 @@ public class Matrix {
             vector[i] = i;
         }
         return det(this.matrixSize,0,vector,this.matrix);
+    }
+
+//    generating Lower and Upper distribution of our matrix
+    public boolean luDistribution(int size, double[][] matrixA){
+
+        for(int col = 0; col < size - 1; col++){
+            if(Math.abs(matrixA[col][col]) < Math.exp(-12)){
+                return false;
+            }
+
+            for(int i = col + 1; i < size; i++){
+                matrixA[i][col] /= matrixA[col][col];
+            }
+
+            for(int i = col + 1; i < size; i++){
+                for(int j = col + 1; j < size; j++){
+                    matrixA[i][j] -= matrixA[i][col] * matrixA[col][j];
+                }
+            }
+        }
+        return true;
+    }
+
+//    Generate solution with Lower and Upper distribution to the inverting matrix problem
+    public boolean luXSolver(int row, int size, double[][] matrixA, double[][] unitMatrix){
+
+        double s;
+
+        for(int i = 1; i < size; i++){
+
+            s =0;
+            for (int j = 0; j < i; j++){
+                s += matrixA[i][j] * unitMatrix[j][row];
+            }
+            unitMatrix[i][row] -= s;
+        }
+
+        if(Math.abs(matrixA[size-1][size-1]) < Math.exp(-12)){
+            return false;
+        }
+
+        unitMatrix[size-1][row] /= matrixA[size-1][size-1];
+
+        for(int i = size - 2; i >= 0 ; i--){
+
+            s = 0;
+            for(int j = i + 1; j < size ; j++){
+
+                s += matrixA[i][j] * unitMatrix[j][row];
+            }
+            if(Math.abs(matrixA[i][i]) < Math.exp(-12)){
+                return false;
+            }
+
+            unitMatrix[i][row] = (unitMatrix[i][row] - s) / matrixA[i][i];
+        }
+        return true;
     }
 }
 
