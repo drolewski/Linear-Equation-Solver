@@ -80,4 +80,74 @@ public class Matrix {
 
         return resultMatrix;
     }
+
+//    determinant function, it takes rank of matrix, analyzing row, vector of column indexes, and calculating matrix
+//    In this method we use recursion and method similar as Laplace's way to count determinant
+    private double det(int rank, int row, int[] vector,double[][] matrixA){
+        int result;
+        int counter;
+        int sign;
+        int[] columns = new int[this.matrixSize];
+
+        if(rank == 1){
+            return matrixA[row][vector[0]];
+        } else{
+            result = 0;
+            sign = 1;
+            for(int i = 0; i < rank ; i++){
+
+                counter = 0;
+                for(int j = 0; j < rank -1; j++){
+                    if(counter == i){
+                        counter++;
+                    }
+                    columns[j] = vector[counter++];
+                }
+                result += sign* matrixA[row][vector[i]] * det(rank-1, row + 1, columns, matrixA);
+                sign = -sign;
+            }
+        }
+        return result;
+    }
+
+//    simplest call of the determinant method
+    public double det(){
+        int[] vector = new int[this.matrixSize];
+        for(int i = 0; i < this.matrixSize ; i++){
+            vector[i] = i;
+        }
+        return det(this.matrixSize,0,vector,this.matrix);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
