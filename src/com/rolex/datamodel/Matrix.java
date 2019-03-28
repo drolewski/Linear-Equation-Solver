@@ -1,5 +1,6 @@
 package com.rolex.datamodel;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Matrix {
@@ -69,6 +70,7 @@ public class Matrix {
     public double[] multipleMatrix(double[] tmpVector) {
         double[] resultMatrix = new double[this.matrixSize];
 
+        DecimalFormat df = new DecimalFormat("#.####");
         if (this.matrixSize == tmpVector.length) {
             for (int i = 0; i < this.matrixSize; i++) {
 
@@ -78,7 +80,7 @@ public class Matrix {
                     tempValue += tmpVector[j] * this.matrix[i][j];
 
                     if (j == this.matrixSize - 1) {
-                        resultMatrix[i] = tempValue;
+                        resultMatrix[i] = Math.round(tempValue*100000)/100000.0d; //set the precision of multiplication result as 4 sign after decimal point
                     }
                 }
             }
