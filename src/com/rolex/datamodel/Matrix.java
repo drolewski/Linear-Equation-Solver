@@ -52,10 +52,10 @@ public class Matrix {
         }
     }
 
-    public void printMatrix(){
-        for(int i = 0 ; i < this.matrixSize ; i++ ){
-            for( int j = 0 ; j < this.matrixSize ; j++){
-                System.out.print(this.matrix[i][j] + "\t\t");
+    public void printMatrix(double[][] matrix){
+        for(int i = 0 ; i < matrix.length ; i++ ){
+            for( int j = 0 ; j < matrix[0].length ; j++){
+                System.out.print(matrix[i][j] + "\t\t");
             }
             System.out.println("\n");
         }
@@ -66,27 +66,25 @@ public class Matrix {
 //    We dont have to worry about different vectors as Nx1,
 //    because in Systems of Linear Equations vector X and produce
 //    has only one column
-    public double[][] multipleMatrix(double[][] tmpVector){
-        double[][] resultMatrix = new double[this.matrixSize][1];
+    public double[] multipleMatrix(double[] tmpVector) {
+        double[] resultMatrix = new double[this.matrixSize];
 
-        if(this.matrixSize == tmpVector.length){
-            for (int i = 0; i < this.matrixSize ; i++){
+        if (this.matrixSize == tmpVector.length) {
+            for (int i = 0; i < this.matrixSize; i++) {
 
                 double tempValue = 0;
-                for (int j = 0; j < this.matrixSize; j++){
+                for (int j = 0; j < this.matrixSize; j++) {
 
-                    tempValue += tmpVector[j][0]*this.matrix[i][j];
+                    tempValue += tmpVector[j] * this.matrix[i][j];
 
-                    if(j == this.matrixSize - 1){
-                        resultMatrix[i][0] = tempValue;
+                    if (j == this.matrixSize - 1) {
+                        resultMatrix[i] = tempValue;
                     }
                 }
-
             }
-        }else{
-            System.out.println("Dimensions of matrices aren't compatible.");
+        } else {
+            System.out.println("Dimensions of matrix and vector aren't compatible.");
         }
-
         return resultMatrix;
     }
 
@@ -206,8 +204,24 @@ public class Matrix {
             ok = false;
         }
 
+        this.matrix = this.getUnitMatrix(); // return result of distribution matrix to the processing matrix
         return ok;
 
+    }
+
+    public void solveLinearExuationLU(double[][] vector){
+        if(vector[0].length != this.matrixSize){
+
+        }
+        if(det() == 0.0 ){
+            System.out.println("Determinant of the matrix is equal to 0.0.");
+        }else{
+            if(luXSolver()){
+
+            }else{
+                System.out.println("Reversed Matrix doesn't exist.");
+            }
+        }
     }
 }
 
