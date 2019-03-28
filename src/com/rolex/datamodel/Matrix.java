@@ -209,19 +209,23 @@ public class Matrix {
 
     }
 
-    public void solveLinearExuationLU(double[][] vector){
-        if(vector[0].length != this.matrixSize){
-
-        }
-        if(det() == 0.0 ){
-            System.out.println("Determinant of the matrix is equal to 0.0.");
-        }else{
-            if(luXSolver()){
-
-            }else{
-                System.out.println("Reversed Matrix doesn't exist.");
+//    main structure of calculator with methods call
+    public double[] solveLinearEquationDistributionMatrix(double[] vector){
+        if(vector.length == this.matrixSize) {
+            if (det() == 0.0) {
+                System.out.println("Determinant of the matrix is equal to 0.0.");
+            } else {
+                if (luXSolver()) {
+                    double[] result = multipleMatrix(vector);
+                    return result;
+                } else {
+                    System.out.println("Reversed Matrix doesn't exist.");
+                }
             }
+        }else{
+            System.out.println("Different dimensions between vector and matrix.");
         }
+        return null;
     }
 }
 
