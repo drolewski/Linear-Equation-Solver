@@ -129,7 +129,7 @@ public class Matrix {
     }
 
 //    generating Lower and Upper distribution of our matrix
-    public boolean luDistribution(int size, double[][] matrixA){
+    private boolean luDistribution(int size, double[][] matrixA){
 
         for(int col = 0; col < size - 1; col++){
             if(Math.abs(matrixA[col][col]) < Math.exp(-12)){
@@ -149,40 +149,65 @@ public class Matrix {
         return true;
     }
 
+//    easier way to call luDistribution method, without parameters it uses class fields
+    private boolean luDistribution(){
+        return luDistribution(this.matrixSize,this.matrix);
+    }
+
 //    Generate solution with Lower and Upper distribution to the inverting matrix problem
-    public boolean luXSolver(int row, int size, double[][] matrixA, double[][] unitMatrix){
+    private boolean luXSolver(int row){
 
         double s;
 
-        for(int i = 1; i < size; i++){
+        for(int i = 1; i < this.matrixSize; i++){
 
             s =0;
             for (int j = 0; j < i; j++){
-                s += matrixA[i][j] * unitMatrix[j][row];
+                s += this.matrix[i][j] * this.unitMatrix[j][row];
             }
-            unitMatrix[i][row] -= s;
+            this.unitMatrix[i][row] -= s;
         }
 
-        if(Math.abs(matrixA[size-1][size-1]) < Math.exp(-12)){
+        if(Math.abs(this.matrix[this.matrixSize-1][this.matrixSize-1]) < Math.exp(-12)){
             return false;
         }
 
-        unitMatrix[size-1][row] /= matrixA[size-1][size-1];
+        this.unitMatrix[this.matrixSize-1][row] /= this.matrix[this.matrixSize-1][this.matrixSize-1];
 
-        for(int i = size - 2; i >= 0 ; i--){
+        for(int i = this.matrixSize - 2; i >= 0 ; i--){
 
             s = 0;
-            for(int j = i + 1; j < size ; j++){
+            for(int j = i + 1; j < this.matrixSize ; j++){
 
-                s += matrixA[i][j] * unitMatrix[j][row];
+                s += this.matrix[i][j] * this.unitMatrix[j][row];
             }
-            if(Math.abs(matrixA[i][i]) < Math.exp(-12)){
+            if(Math.abs(this.matrix[i][i]) < Math.exp(-12)){
                 return false;
             }
 
-            unitMatrix[i][row] = (unitMatrix[i][row] - s) / matrixA[i][i];
+            this.unitMatrix[i][row] = (this.unitMatrix[i][row] - s) / this.matrix[i][i];
         }
         return true;
+    }
+
+//    easier way to call luXSolver, to generate distribution matrix, return boolean
+    public boolean luXSolver(){
+        boolean ok;
+        if(luDistribution()) {
+
+            ok = true;
+            for (int i = 0; i < this.matrixSize; i++) {
+                if (!luXSolver(i)) {
+                    ok = false;
+                    break;
+                }
+            }
+        }else {
+            ok = false;
+        }
+
+        return ok;
+
     }
 }
 
