@@ -91,21 +91,23 @@ public class Matrix {
 
 //    determinant function, it takes rank of matrix, analyzing row, vector of column indexes, and calculating matrix
 //    In this method we use recursion and method similar as Laplace's way to count determinant
-    private double det(int rank, int row, int[] vector,double[][] matrixA){
+    private double det(int rank, int row, int[] vector,double[][] matrixA) {
         int result;
         int counter;
         int sign;
-        int[] columns = new int[this.matrixSize];
 
-        if(rank == 1){
+        if (rank == 1) {
             return matrixA[row][vector[0]];
-        } else{
+        }else if( rank == 2){
+            return ((matrixA[0][0]*matrixA[1][1]) - (matrixA[0][1]*matrixA[1][0]));
+        }else{
+            int[] columns = new int[this.matrixSize];
             result = 0;
             sign = 1;
             for(int i = 0; i < rank ; i++){
 
                 counter = 0;
-                for(int j = 0; j < rank -1; j++){
+                for(int j = 0; j < rank - 1; j++){
                     if(counter == i){
                         counter++;
                     }
