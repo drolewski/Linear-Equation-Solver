@@ -67,19 +67,18 @@ public class Matrix {
 //    We dont have to worry about different vectors as Nx1,
 //    because in Systems of Linear Equations vector X and produce
 //    has only one column
-    public double[] multipleMatrix(double[] tmpVector) {
+    public double[] multipleMatrix(double[][] matrix, double[] tmpVector) {
         double[] resultMatrix = new double[this.matrixSize];
-
-        DecimalFormat df = new DecimalFormat("#.####");
-        if (this.matrixSize == tmpVector.length) {
-            for (int i = 0; i < this.matrixSize; i++) {
+        
+        if (matrix.length == tmpVector.length) {
+            for (int i = 0; i < matrix.length; i++) {
 
                 double tempValue = 0;
-                for (int j = 0; j < this.matrixSize; j++) {
+                for (int j = 0; j < matrix[0].length; j++) {
 
-                    tempValue += tmpVector[j] * this.matrix[i][j];
+                    tempValue += tmpVector[j] * matrix[i][j];
 
-                    if (j == this.matrixSize - 1) {
+                    if (j == matrix.length - 1) {
                         resultMatrix[i] = Math.round(tempValue*100000)/100000.0d; //set the precision of multiplication result as 4 sign after decimal point
                     }
                 }
@@ -218,7 +217,7 @@ public class Matrix {
                 System.out.println("Determinant of the matrix is equal to 0.0.");
             } else {
                 if (luXSolver()) {
-                    double[] result = multipleMatrix(vector);
+                    double[] result = multipleMatrix(this.matrix,vector);
                     return result;
                 } else {
                     System.out.println("Reversed Matrix doesn't exist.");
