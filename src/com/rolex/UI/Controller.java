@@ -10,15 +10,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
 import java.util.ArrayList;
+import java.util.function.DoubleBinaryOperator;
 
 public class Controller {
 
     //gridPane that will handle coefficients of equations
     private static GridPane equationGridPane = new GridPane();
+
+    //Array list with textField information
+    private static ArrayList<TextField> textFields = new ArrayList<>();
+
+    //Array list with result Information
+    private static ArrayList<TextField> resultField = new ArrayList<>();
 
     @FXML
     private Spinner matrixSize;
@@ -27,10 +35,12 @@ public class Controller {
     private GridPane mainWindow;
 
     @FXML
-    private Button sizeButton;
+    private Button calculateButton;
 
+//    Take size of equations system and generate it
     @FXML
     public void getMatrixSize(){
+
 
 //      size clear the gridPane and set the size of gaps between element
         equationGridPane.getChildren().clear();
@@ -44,7 +54,7 @@ public class Controller {
         System.out.println(matrix.getMatrixSize());
 
 //        create fields with declared size to input our matrix data
-        ArrayList<TextField> textFields = new ArrayList<>();
+        textFields.clear();
         for(int i = 0 ; i < sizeOfMatrix*sizeOfMatrix ; i++ ) {
             TextField textElement = new TextField();
             textElement.setPromptText("Coefficient " + i);
@@ -63,15 +73,44 @@ public class Controller {
                     textFields.get(elementsCounter).requestFocus();
                 }
             }
-            TextField resultField = new TextField();
-            resultField.setPromptText("Result " + i);
-            resultField.setMaxSize(100,400);
-            equationGridPane.add(resultField, 2 + sizeOfMatrix , 1 + i);
+            TextField tf = new TextField();
+            tf.setPromptText("Result " + i);
+            tf.setMaxSize(100,400);
+            resultField.add(tf);
+            equationGridPane.add(tf, 2 + sizeOfMatrix , 1 + i);
 
             if(i == sizeOfMatrix/2){
                 equationGridPane.add(equalSign,1 + sizeOfMatrix , i + 1);
             }
         }
         mainWindow.add(equationGridPane,1,2);
+        calculateButton.setDisable(false);
+    }
+
+    @FXML
+    public void calculateMatrix(){
+
+        Matrix matrix = new Matrix((int) matrixSize.getValue());
+        ArrayList<Double> matrixVector = new ArrayList<>();
+        double[] resultVector = new double[(int) matrixSize.getValue()];
+
+        for(TextField tf : textFields){
+            if(tf.getText().equals("")){
+                tf.setText("0.0");
+            }
+            matrixVector.add(Double.parseDouble(tf.getText()));
+        }
+
+        for(int i = 0; i < (int) matrixSize.getValue(); i++){
+            if(resultField.get(i).getText().equals("")){
+                resultField.get(i).setText("0.0");
+            }
+            resultVector[i] = Double.parseDouble(resultField.get(i).getText());
+        }
+
+        matrix.createMatrix(matrixVector);
+        matrix.solveLinearEquationDistributionMatrix(resultVector);
+
+
     }
 }
