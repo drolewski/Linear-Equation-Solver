@@ -109,7 +109,15 @@ public class Controller {
         }
 
         matrix.createMatrix(matrixVector);
-        matrix.solveLinearEquationDistributionMatrix(resultVector);
+        double[] result;
+        if((result = matrix.solveLinearEquationDistributionMatrix(resultVector)) != null){
+            for(int i = 0; i < result.length; i++){
+                System.out.println("\n");
+                System.out.println("X" + (i + 1) + " = " + result[i]);
+            }
+        }else{
+            System.out.println("This System of Linear Equations doesn't have result.");
+        }
 
 
     }
