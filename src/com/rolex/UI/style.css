@@ -1,0 +1,10 @@
+.scroll-bar{
+    -fx-background-color: white;
+}
+.text-field {
+    -fx-prompt-text-fill: black;
+}
+
+.text-field:empty .text {
+    -fx-effect: null ;
+}
