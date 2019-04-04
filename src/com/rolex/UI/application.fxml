@@ -9,9 +9,10 @@
 <GridPane fx:id="mainWindow" xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.rolex.UI.Controller" vgap="10" hgap="10">
 
-    <Label text="Number of Equations" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-    <Spinner fx:id="matrixSize" min="1" max="100" editable="true" initialValue="3" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-    <Button fx:id="sizeButton" text="Get Value" GridPane.rowIndex="0" GridPane.columnIndex="3" onAction="#getMatrixSize"/>
-
+    <HBox GridPane.rowIndex="0" GridPane.columnIndex="1" spacing="10">
+        <Label text="Number of Equations"/>
+        <Spinner fx:id="matrixSize" min="1" max="100" editable="true" initialValue="3" />
+        <Button fx:id="sizeButton" text="Get Value" onAction="#getMatrixSize"/>
+    </HBox>
 
 </GridPane>
