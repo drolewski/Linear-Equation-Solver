@@ -87,6 +87,7 @@ public class Controller {
         calculateButton.setDisable(false);
     }
 
+//    Calculate the system of linear equations.
     @FXML
     public void calculateMatrix(){
 
