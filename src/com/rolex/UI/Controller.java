@@ -14,7 +14,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.function.DoubleBinaryOperator;
 
 public class Controller {
@@ -91,6 +93,22 @@ public class Controller {
     @FXML
     public void calculateMatrix(){
 
+        //dialog Pane initialization
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainWindow.getScene().getWindow());
+        dialog.setTitle("Linear Equations Result");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("resultWindow.fxml"));
+        try{
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        }catch(IOException e){
+            System.out.println("Couldn't load the dialog.");
+            e.printStackTrace();
+            return;
+        }
+
+        Optional<ButtonType> optionButton; //option <button>
+
         Matrix matrix = new Matrix((int) matrixSize.getValue());
         ArrayList<Double> matrixVector = new ArrayList<>();
         double[] resultVector = new double[(int) matrixSize.getValue()];
@@ -105,12 +123,13 @@ public class Controller {
             }
 
             //replace elements different than numbers
-            if((!tf.getText().matches("^-??[0-9]++\\.??[0-9]++$")) &&
-                    (!tf.getText().matches("-??^[0-9]++"))){
+            if((!tf.getText().trim().matches("^-??[0-9]++\\.[0-9]++")) &&
+                    (!tf.getText().trim().matches("^-??[0-9]++"))){
 
                 tf.setText("0.0");
             }
 
+//            System.out.println(tf.getText());
             matrixVector.add(Double.parseDouble(tf.getText()));
         }
 
@@ -124,24 +143,65 @@ public class Controller {
             }
 
             //replace elements different than numbers
-            if((!resultField.get(i).getText().matches("^-??[0-9]++\\.??[0-9]++$")) &&
-                    (!resultField.get(i).getText().matches("^-??[0-9]++"))){
+            if((!resultField.get(i).getText().trim().matches("^-??[0-9]++\\.[0-9]++")) &&
+                    (!resultField.get(i).getText().trim().matches("^-??[0-9]++"))){
 
                 resultField.get(i).setText("0.0");
             }
 
+//            System.out.println(resultField.get(i).getText());
             resultVector[i] = Double.parseDouble(resultField.get(i).getText());
         }
 
+
         matrix.createMatrix(matrixVector);
         double[] result;
+
+        //      declaration of DialogPane with result information.
         if((result = matrix.solveLinearEquationDistributionMatrix(resultVector)) != null){
-            for(int i = 0; i < result.length; i++){
-                System.out.println("\n");
-                System.out.println("X" + (i + 1) + " = " + result[i]);
+//            for(int i = 0; i < result.length; i++){
+//                System.out.println("\n");
+//                System.out.println("X" + (i + 1) + " = " + result[i]);
+//            }
+
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+            DialogPaneController controller = fxmlLoader.getController();
+            controller.showResult(result);
+
+            optionButton = dialog.showAndWait();
+            if (optionButton.isPresent() && optionButton.get() == ButtonType.OK) {
+                //Save data in the file
+            } else {
+                dialog.close();
             }
+
         }else{
-            System.out.println("This System of Linear Equations doesn't have result.");
+//            System.out.println("This System of Linear Equations doesn't have result.");
+
+//          declaration of DialogPane with no result Alert.
+
+            DialogPaneController controller = fxmlLoader.getController();
+            controller.noResult();
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+
+
+            optionButton = dialog.showAndWait();
+            if(optionButton.isPresent() && optionButton.get() == ButtonType.OK){
+                dialog.close();
+            }
+
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
