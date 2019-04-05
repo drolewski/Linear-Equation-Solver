@@ -104,6 +104,13 @@ public class Controller {
                 tf.setText(tf.getText().replace(',','.'));
             }
 
+            //replace elements different than numbers
+            if((!tf.getText().matches("^[0-9]++\\.??[0-9]++$")) &&
+                    (!tf.getText().matches("^[0-9]++"))){
+
+                tf.setText("0.0");
+            }
+
             matrixVector.add(Double.parseDouble(tf.getText()));
         }
 
@@ -115,6 +122,14 @@ public class Controller {
             if(resultField.get(i).getText().contains(",")){ // replace , to .
                 resultField.get(i).setText(resultField.get(i).getText().replace(',','.'));
             }
+
+            //replace elements different than numbers
+            if((!resultField.get(i).getText().matches("^[0-9]++\\.??[0-9]++$")) &&
+                    (!resultField.get(i).getText().matches("^[0-9]++"))){
+
+                resultField.get(i).setText("0.0");
+            }
+
             resultVector[i] = Double.parseDouble(resultField.get(i).getText());
         }
 
