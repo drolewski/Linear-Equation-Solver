@@ -18,7 +18,7 @@ public class DialogPaneController {
     @FXML
     private VBox vBoxX;
 
-
+//  This Dialog Pane appear when our system of Equations doesn't have result
     public void noResult(){
         dialogPane.setPrefHeight(150);
         dialogPane.setPrefWidth(250);
@@ -30,6 +30,7 @@ public class DialogPaneController {
         gridPane.add(label, 2,2);
     }
 
+//    this Dialog Pane appear when linear equations have result.
     public void showResult(double[] result){
 
         dialogPane.setPrefHeight(400);
