@@ -80,6 +80,7 @@ public class Controller {
     }
 
 //    Calculate the system of linear equations.
+//    And create DialogPane with information about our results.
     @FXML
     public void calculateMatrix(){
 
