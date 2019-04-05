@@ -1,23 +1,14 @@
 package com.rolex.UI;
 
 import com.rolex.datamodel.Matrix;
-import javafx.beans.DefaultProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.function.DoubleBinaryOperator;
 
 public class Controller {
 
@@ -171,7 +162,7 @@ public class Controller {
             controller.showResult(result);
 
             optionButton = dialog.showAndWait();
-            if (optionButton.isPresent() && optionButton.get() == ButtonType.OK) {
+            if(optionButton.isPresent() && optionButton.get() == ButtonType.OK) {
                 //Save data in the file
             } else {
                 dialog.close();
