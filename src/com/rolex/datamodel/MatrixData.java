@@ -2,6 +2,7 @@ package com.rolex.datamodel;
 
 import javafx.stage.FileChooser;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -14,12 +15,12 @@ public class MatrixData extends Matrix {
     public MatrixData(int matrixSize) {
         super(matrixSize);
     }
-
+// Store Data in the file
     public void storeMatrix(String name) throws IOException{
         Path fileName = Paths.get(name);
         BufferedWriter bw = Files.newBufferedWriter(fileName);
         try{
-            bw.write(String.format("Number of Equations: %s",super.getMatrixSize()));
+            bw.write(String.format("Number of Equations:\t%s",super.getMatrixSize()));
             bw.newLine();
             bw.write("-------------------------------------------");
             bw.newLine();
@@ -27,7 +28,7 @@ public class MatrixData extends Matrix {
             bw.newLine();
             for(int i = 0; i < super.getMatrixSize(); i++){
                 for(int j = 0; j < super.getMatrixSize(); j++){
-                    bw.write(super.getStartMatrix()[i][j] + "\t");
+                    bw.write("\t"+ super.getStartMatrix()[i][j] + "\t");
                 }
                 bw.newLine();
             }
@@ -37,7 +38,7 @@ public class MatrixData extends Matrix {
             bw.write("Vector of Values: ");
             bw.newLine();
             for(int i = 0; i < super.getValueVector().length; i++){
-                bw.write(super.getValueVector()[i] + "");
+                bw.write("\t" + super.getValueVector()[i] + "");
                 bw.newLine();
             }
 
@@ -58,7 +59,5 @@ public class MatrixData extends Matrix {
                 bw.close();
             }
         }
-
     }
-
 }
