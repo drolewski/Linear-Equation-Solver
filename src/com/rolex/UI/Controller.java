@@ -105,8 +105,8 @@ public class Controller {
             }
 
             //replace elements different than numbers
-            if((!tf.getText().matches("^[0-9]++\\.??[0-9]++$")) &&
-                    (!tf.getText().matches("^[0-9]++"))){
+            if((!tf.getText().matches("^-??[0-9]++\\.??[0-9]++$")) &&
+                    (!tf.getText().matches("-??^[0-9]++"))){
 
                 tf.setText("0.0");
             }
@@ -124,8 +124,8 @@ public class Controller {
             }
 
             //replace elements different than numbers
-            if((!resultField.get(i).getText().matches("^[0-9]++\\.??[0-9]++$")) &&
-                    (!resultField.get(i).getText().matches("^[0-9]++"))){
+            if((!resultField.get(i).getText().matches("^-??[0-9]++\\.??[0-9]++$")) &&
+                    (!resultField.get(i).getText().matches("^-??[0-9]++"))){
 
                 resultField.get(i).setText("0.0");
             }
