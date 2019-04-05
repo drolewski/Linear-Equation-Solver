@@ -44,10 +44,12 @@ public class Controller {
         int sizeOfMatrix = (int) matrixSize.getValue();
         Matrix matrix = new Matrix(sizeOfMatrix);
 
-        System.out.println(matrix.getMatrixSize());
+//        System.out.println(matrix.getMatrixSize());
 
-//        create fields with declared size to input our matrix data
+//        clear ArrayList of Matrix elements and arrayList of result elements.
         textFields.clear();
+        resultField.clear();
+//        create fields with declared size to input our matrix data
         for(int i = 0 ; i < sizeOfMatrix*sizeOfMatrix ; i++ ) {
             TextField textElement = new TextField();
             textElement.setPromptText("Coefficient " + i);
@@ -62,9 +64,6 @@ public class Controller {
         for(int i = 0 ; i < sizeOfMatrix ; i++){
             for(int j = 0; j < sizeOfMatrix ; j++ , elementsCounter++) {
                 equationGridPane.add(textFields.get(elementsCounter),1 + j , 1 + i);
-                if(elementsCounter == 0){
-                    textFields.get(elementsCounter).requestFocus();
-                }
             }
             TextField tf = new TextField();
             tf.setPromptText("Result " + i);
