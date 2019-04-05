@@ -42,7 +42,7 @@ public class Matrix {
         this.matrix = matrixTransposed;
     }
 
-//    Temporary method to create matrix
+//    Create matrix in our class field
     public void createMatrix(ArrayList<Double> listOfElements){
         int vectorPointer=0;
         for(int i = 0; i < this.matrixSize; i++){
