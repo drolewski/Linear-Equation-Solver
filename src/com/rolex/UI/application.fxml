@@ -10,13 +10,14 @@
             fx:controller="com.rolex.UI.Controller" stylesheets="@style.css">
     <content>
         <GridPane fx:id="mainWindow" vgap="10" hgap="10" >
-            <VBox GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="1000">
+
+            <VBox fx:id="menuBar" GridPane.rowIndex="0" GridPane.columnIndex="0" prefWidth="895" >
                 <MenuBar >
                     <Menu text="File">
                         <items>
-                            <MenuItem text="Open"/>
+                            <MenuItem text="Open" onAction="#openFile"/>
                             <SeparatorMenuItem/>
-                            <MenuItem text="Exit" />
+                            <MenuItem text="Exit" onAction="#closeWindow" />
                         </items>
                     </Menu>
                     <Menu text="Help">
