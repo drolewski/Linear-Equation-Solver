@@ -4,15 +4,18 @@ import com.rolex.datamodel.Matrix;
 import com.rolex.datamodel.MatrixData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -28,6 +31,9 @@ public class Controller {
 
     //Array list with result Information
     private static ArrayList<TextField> resultField = new ArrayList<>();
+
+    //Array list with data from read file
+    private static ArrayList<String> resultString = new ArrayList<>();
 
     @FXML
     private Spinner matrixSize;
@@ -221,10 +227,105 @@ public class Controller {
         }
     }
 
+//    close application main window
     @FXML
     public void closeWindow(){
         Stage window = (Stage) mainWindow.getScene().getWindow();
         window.close();
+    }
+
+//    Generate fileChooser, to pick file with matrix data
+    @FXML
+    public void openFile(){
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Matrix File.");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text","*.txt")
+        );
+        File file = fileChooser.showOpenDialog(mainWindow.getScene().getWindow());
+
+        if(file != null){
+            try{
+                openMatrix(file.getPath());
+                generateFileToUI();
+
+
+            }catch (IOException e){
+                System.out.println(e.getMessage());
+            }
+        }else{
+            System.out.println("Could't open that File.");
+        }
+    }
+
+//    Generate Array of matrix elements
+    private void openMatrix(String name) throws IOException {
+        Path filename = Paths.get(name);
+        BufferedReader br = Files.newBufferedReader(filename);
+
+        String input;
+        try {
+            while ((input = br.readLine()) != null) {
+                String[] pieces = input.split("\t");
+                for (int i = 0; i < pieces.length; i++) {
+                    if (pieces[i].matches("^-??[0-9]++\\.[0-9]++") || pieces[i].matches("^-??[0-9]++")) {
+                        resultString.add(pieces[i]);
+                    }
+                }
+            }
+
+        } finally {
+            if (br != null) {
+                br.close();
+            }
+        }
+
+    }
+
+//    Generate File to the User Interface, show saved in the file matrix
+    @SuppressWarnings("Duplicates")
+    private void generateFileToUI(){
+        int numberOfEquations = Integer.parseInt(resultString.get(0));
+//        System.out.println(numberOfEquations);
+        matrixSize.getValueFactory().setValue(numberOfEquations);
+        equationGridPane.getChildren().clear();
+        mainWindow.getChildren().remove(equationGridPane);
+        equationGridPane.setVgap(7);
+        equationGridPane.setHgap(7);
+
+        MatrixData matrix = new MatrixData(numberOfEquations);
+
+        textFields.clear();
+        resultField.clear();
+
+
+        for(int i = 1 ; i < (1+(numberOfEquations*numberOfEquations)) ; i++ ) {
+            TextField textElement = new TextField();
+            textElement.setText(resultString.get(i));
+            textElement.setMaxSize(100, 400);
+            textFields.add(textElement);
+        }
+
+
+        Label equalSign = new Label("=");
+        int elementsCounter = 0;
+        for(int i = 0 ; i < numberOfEquations ; i++){
+            for(int j = 0; j < numberOfEquations ; j++ , elementsCounter++) {
+                equationGridPane.add(textFields.get(elementsCounter),1 + j , 1 + i);
+            }
+            TextField tf = new TextField();
+            tf.setText(resultString.get(1+(numberOfEquations*numberOfEquations)+i));
+            tf.setMaxSize(100,400);
+            resultField.add(tf);
+            equationGridPane.add(tf, 2 + numberOfEquations , 1 + i);
+
+            if(i == numberOfEquations/2){
+                equationGridPane.add(equalSign,1 + numberOfEquations , i + 1);
+            }
+        }
+        mainWindow.add(equationGridPane,0,3);
+        calculateButton.setDisable(false);
     }
 }
 
