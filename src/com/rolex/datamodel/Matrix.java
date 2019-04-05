@@ -10,11 +10,13 @@ public class Matrix {
     private double[][] matrix;
     private double[][] unitMatrix;
     private double[] valueVector;
+    private double[] solutionVector;
 
     public Matrix(int matrixSize) {
         this.matrixSize = matrixSize;
         this.matrix = new double[matrixSize][matrixSize];
         this.unitMatrix = new double[matrixSize][matrixSize];
+        this.startMatrix = new double[matrixSize][matrixSize];
         for(int i = 0; i < matrixSize; i++){
             this.unitMatrix[i][i] = 1;
         }
@@ -32,7 +34,19 @@ public class Matrix {
         return unitMatrix;
     }
 
-//    Transpose matrix stored in the matrix field
+    public double[][] getStartMatrix() {
+        return startMatrix;
+    }
+
+    public double[] getValueVector() {
+        return valueVector;
+    }
+
+    public double[] getSolutionVector() {
+        return solutionVector;
+    }
+
+    //    Transpose matrix stored in the matrix field
     public void transposeMatrix(){
         double[][] matrixTransposed = new double[this.matrixSize][this.matrixSize];
 
@@ -50,10 +64,10 @@ public class Matrix {
         for(int i = 0; i < this.matrixSize; i++){
             for(int j = 0 ; j < this.matrixSize ; j++){
                 this.matrix[i][j] = listOfElements.get(vectorPointer);
+                this.startMatrix[i][j] = listOfElements.get(vectorPointer);
                 vectorPointer++;
             }
         }
-        this.startMatrix = this.matrix;
     }
 
     public void printMatrix(double[][] matrix){
@@ -224,6 +238,7 @@ public class Matrix {
             } else {
                 if (luXSolver()) {
                     double[] result = multipleMatrix(this.matrix,vector);
+                    this.solutionVector = result;
                     return result;
                 } else {
                     System.out.println("Reversed Matrix doesn't exist.");
