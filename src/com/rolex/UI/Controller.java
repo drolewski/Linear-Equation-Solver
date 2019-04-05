@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -36,10 +38,12 @@ public class Controller {
     @FXML
     private Button calculateButton;
 
+    @FXML
+    private VBox menuBar;
+
 //    Take size of equations system and generate it
     @FXML
     public void getMatrixSize(){
-
 
 //      size clear the gridPane and set the size of gaps between element
         equationGridPane.getChildren().clear();
@@ -81,7 +85,7 @@ public class Controller {
                 equationGridPane.add(equalSign,1 + sizeOfMatrix , i + 1);
             }
         }
-        mainWindow.add(equationGridPane,1,2);
+        mainWindow.add(equationGridPane,0,3);
         calculateButton.setDisable(false);
     }
 
@@ -215,6 +219,12 @@ public class Controller {
             }
 
         }
+    }
+
+    @FXML
+    public void closeWindow(){
+        Stage window = (Stage) mainWindow.getScene().getWindow();
+        window.close();
     }
 }
 
