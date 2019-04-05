@@ -9,6 +9,7 @@ public class Matrix {
     private int matrixSize;
     private double[][] matrix;
     private double[][] unitMatrix;
+    private double[] valueVector;
 
     public Matrix(int matrixSize) {
         this.matrixSize = matrixSize;
@@ -216,6 +217,7 @@ public class Matrix {
 
 //    main structure of calculator with methods call
     public double[] solveLinearEquationDistributionMatrix(double[] vector){
+        this.valueVector = vector;
         if(vector.length == this.matrixSize) {
             if (det() == 0.0) {
                 System.out.println("Determinant of the matrix is equal to 0.0.");
