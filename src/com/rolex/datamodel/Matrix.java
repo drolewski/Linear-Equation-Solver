@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Matrix {
 
+    private double[][] startMatrix;
     private int matrixSize;
     private double[][] matrix;
     private double[][] unitMatrix;
@@ -51,6 +52,7 @@ public class Matrix {
                 vectorPointer++;
             }
         }
+        this.startMatrix = this.matrix;
     }
 
     public void printMatrix(double[][] matrix){
