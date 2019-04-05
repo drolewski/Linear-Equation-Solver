@@ -99,12 +99,21 @@ public class Controller {
             if(tf.getText().equals("")){
                 tf.setText("0.0");
             }
+
+            if(tf.getText().contains(",")){ //replace , to . from the input fields
+                tf.setText(tf.getText().replace(',','.'));
+            }
+
             matrixVector.add(Double.parseDouble(tf.getText()));
         }
 
         for(int i = 0; i < (int) matrixSize.getValue(); i++){
             if(resultField.get(i).getText().equals("")){
                 resultField.get(i).setText("0.0");
+            }
+
+            if(resultField.get(i).getText().contains(",")){ // replace , to .
+                resultField.get(i).setText(resultField.get(i).getText().replace(',','.'));
             }
             resultVector[i] = Double.parseDouble(resultField.get(i).getText());
         }
@@ -119,7 +128,5 @@ public class Controller {
         }else{
             System.out.println("This System of Linear Equations doesn't have result.");
         }
-
-
     }
 }
