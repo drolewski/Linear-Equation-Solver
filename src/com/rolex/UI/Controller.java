@@ -1,12 +1,18 @@
 package com.rolex.UI;
 
 import com.rolex.datamodel.Matrix;
+import com.rolex.datamodel.MatrixData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -100,7 +106,7 @@ public class Controller {
 
         Optional<ButtonType> optionButton; //option <button>
 
-        Matrix matrix = new Matrix((int) matrixSize.getValue());
+        MatrixData matrix = new MatrixData((int) matrixSize.getValue());
         ArrayList<Double> matrixVector = new ArrayList<>();
         double[] resultVector = new double[(int) matrixSize.getValue()];
 
@@ -154,16 +160,41 @@ public class Controller {
 //                System.out.println("\n");
 //                System.out.println("X" + (i + 1) + " = " + result[i]);
 //            }
+            ButtonType save = new ButtonType("Save");
+            ButtonType close = new ButtonType("Close");
 
-            dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-            dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+            dialog.getDialogPane().getButtonTypes().add(save);
+            dialog.getDialogPane().getButtonTypes().add(close);
 
             DialogPaneController controller = fxmlLoader.getController();
             controller.showResult(result);
 
             optionButton = dialog.showAndWait();
-            if(optionButton.isPresent() && optionButton.get() == ButtonType.OK) {
-                //Save data in the file
+            /*
+            Open dialogPane with result of calculation and giv user choose to close the window
+            or to save the created data by clicking OK.
+            If user Click OK then fileChooser will appear to choose place there we would like to
+            save data.
+            */
+            if(optionButton.isPresent() && optionButton.get() == save) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save Solution of Linear Equations.");
+                fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("Text", "*.txt")
+                );
+                File file = fileChooser.showSaveDialog(mainWindow.getScene().getWindow());
+
+                if(file != null) {
+                    try {
+                        matrix.storeMatrix(file.getPath().toString());
+
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+//               else{
+//                    System.out.println("Chooser was canceled.");
+//                }
             } else {
                 dialog.close();
             }
