@@ -4,7 +4,9 @@ In this application you can create matrices with 10000 fields to generate soluti
 
 File -> Open command.
 
-Application is simple and useful. For example Civil Engineering students can use it to calculate construction beams .
+Application is simple and useful. For example Civil Engineering students can use it to calculate construction beams.
+
+In the [resultexample.txt](resultexample.txt) is example of programme result saved in *.txt file. You can upload this solution to check out application work.
 
 # Math => Algorithm
 This solution uses distribution matrix algorithm. It firstly creates distributed matrix, after that it multiples with vector B (vector of values) and return vector X. 
