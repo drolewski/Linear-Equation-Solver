@@ -9,3 +9,9 @@ Application is simple and useful. For example Civil Engineering students can use
 This solution uses distribution matrix algorithm. It firstly creates distributed matrix, after that it multiples with vector B (vector of values) and return vector X. 
 To generate invert matrix there is implemented [LU decomposition](https://en.wikipedia.org/wiki/LU_decomposition) method.
 [Here](https://courses.lumenlearning.com/ivytech-collegealgebra/chapter/solving-a-system-of-linear-equations-using-the-inverse-of-a-matrix/) You can read more about invert matrix method.
+
+#Author
+©[Dominik Rolewski](http://github.com/drolewski)
+
+#License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
