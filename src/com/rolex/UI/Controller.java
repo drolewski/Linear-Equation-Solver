@@ -44,9 +44,6 @@ public class Controller {
     @FXML
     private Button calculateButton;
 
-    @FXML
-    private VBox menuBar;
-
 //    Take size of equations system and generate it
     @FXML
     public void getMatrixSize(){
@@ -326,6 +323,33 @@ public class Controller {
         }
         mainWindow.add(equationGridPane,0,3);
         calculateButton.setDisable(false);
+    }
+
+    @FXML
+    private void aboutWindow(){
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainWindow.getScene().getWindow());
+        dialog.setTitle("About Application");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("about.fxml"));
+
+        try{
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        }catch(IOException e){
+            System.out.println("Couldn't load the dialog.");
+            e.printStackTrace();
+            return;
+        }
+
+        aboutController controller =fxmlLoader.getController();
+        controller.showInformation();
+
+        Optional<ButtonType> optionButton;
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        optionButton = dialog.showAndWait();
+        if(optionButton.isPresent() && optionButton.get() == ButtonType.OK){
+            dialog.close();
+        }
     }
 }
 
