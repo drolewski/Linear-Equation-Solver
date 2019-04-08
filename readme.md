@@ -12,7 +12,7 @@ To generate invert matrix there is implemented [LU decomposition](https://en.wik
 [Here](https://courses.lumenlearning.com/ivytech-collegealgebra/chapter/solving-a-system-of-linear-equations-using-the-inverse-of-a-matrix/) You can read more about invert matrix method.
 
 # Author
-©[Dominik Rolewski](http://github.com/drolewski)
+[Dominik Rolewski](http://github.com/drolewski)
 
 # License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
